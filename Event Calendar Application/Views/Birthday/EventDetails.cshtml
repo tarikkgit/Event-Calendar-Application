@@ -1,0 +1,7 @@
+@model EventPlanner.Models.Event
+
+<h2>@Model.Title</h2>
+<p>@Model.Description</p>
+<p>@Model.ScheduledAt.ToString("MMMM dd, yyyy")</p>
+
+<a asp-action="BirthdayCard" asp-controller="Birthday" asp-route-eventId="@Model.EventId" class="btn btn-primary">View Birthday Card</a>

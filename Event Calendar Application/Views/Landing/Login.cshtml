@@ -1,0 +1,22 @@
+@model LoginUser
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="login-group">
+    <h2>Login</h2>
+    <form asp-action="Logging" asp-controller="Landing" method="POST">
+        <div class="input-icons">
+            <i class="fa fa-envelope icon"></i>
+            <input class="form-control" asp-for="Email" placeholder="Email Address">
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+        <div class="input-icons">
+            <i class="fa fa-lock icon"></i>
+            <input class="form-control" asp-for="LoginPassword" placeholder="Password">
+            <span class="text-danger" asp-validation-for="LoginPassword"></span>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" type="submit">Login</button>
+    </form>
+    <a asp-action="ForgotPassword" class="btn btn-link">Don't remember password?</a>
+</div>

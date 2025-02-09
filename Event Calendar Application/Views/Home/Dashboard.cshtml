@@ -1,0 +1,205 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    int Calstart = (int)ViewBag.StartCal.DayOfWeek;
+    int day = 1;
+    int nextmonth = 1;
+}
+
+<h1>
+    Welcome @(ViewBag.CurrentUser !=null ? ViewBag.CurrentUser.FirstName : "Guest")
+    <a href="@Url.Action("EditProfile", "Landing")" class="btn btn-primary ml-3">Edit Profile</a>
+    <a href="@Url.Action("Profile", "Landing")" class="btn btn-secondary ml-3">View Profile</a>
+    @if (ViewBag.CurrentUser != null && ViewBag.CurrentUser.IsAdmin)
+    {
+        <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-warning ml-3">Admin Panel</a>
+    }
+</h1>
+
+
+
+<h4 class="display-4 mb-4 text-center">@DateTime.Now.ToString("MMMMMMMMMMMMM") @DateTime.Now.Year</h4>
+
+<table class="table">
+    <thead>
+        <tr class="cal-headers">
+            <th><h5 class="col-sm text-center">Sunday</h5></th>
+            <th><h5 class="col-sm text-center">Monday</h5></th>
+            <th><h5 class="col-sm text-center">Tuesday</h5></th>
+            <th><h5 class="col-sm text-center">Wednesday</h5></th>
+            <th><h5 class="col-sm text-center">Thursday</h5></th>
+            <th><h5 class="col-sm text-center">Friday</h5></th>
+            <th><h5 class="col-sm text-center">Saturday</h5></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="7">
+                @for (int i = 0; i < 5; i++)
+                {
+                    if (i == 0)
+                    {
+                        <div class="row border border-right-0 border-bottom-0">
+                            @for (var x = 1; x <= Calstart; x++)
+                            {
+                                DateTime thisDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, ViewBag.LastMonth - (Calstart - x));
+                                <div class='lastmonth col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block'>
+                                    <h5 class="row align-items-center">
+                                        <span class="date col-1">@(ViewBag.LastMonth - (Calstart - x))</span>
+                                        <small class="col d-sm-none text-center">@thisDay.DayOfWeek</small>
+                                        <span class="col-1"></span>
+                                    </h5>
+                                    @foreach (var vent in ViewBag.JoinedEvent)
+                                    {
+                                        if (vent.Event.ScheduledAt.Date == thisDay.Date)
+                                        {
+                                            <p class="d-sm">@vent.Event.Title</p>
+                                        }
+                                    }
+                                    @foreach (var vent in ViewBag.Events)
+                                    {
+                                        if (vent.ScheduledAt.Date == thisDay.Date)
+                                        {
+                                            <p class="d-sm">@vent.Title</p>
+                                        }
+                                    }
+                                </div>
+                            }
+                            @for (var y = 1; y <= (7 - Calstart); y++)
+                            {
+                                DateTime thisDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, day);
+                                <div id="@day" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate">
+                                    <h5 class="row align-items-center">
+                                        <span class="date col-1">@day</span>
+                                        @{day++;}
+                                        <small class="col d-sm-none text-center">@thisDay.DayOfWeek</small>
+                                        <span class="col-1"></span>
+                                    </h5>
+                                    @foreach (var vent in ViewBag.JoinedEvent)
+                                    {
+                                        if (vent.Event.ScheduledAt.Date == thisDay.Date)
+                                        {
+                                            <p class="d-sm">@vent.Event.Title</p>
+                                        }
+                                    }
+                                    @foreach (var vent in ViewBag.Events)
+                                    {
+                                        if (vent.ScheduledAt.Date == thisDay.Date)
+                                        {
+                                            <p class="d-sm">@vent.Title</p>
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="row border border-right-0 border-bottom-0">
+                        @for (var week = 1; week <= 7; week++)
+                        {
+                            @if (day <= ViewBag.Month)
+                            {
+                                DateTime thisDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, day);
+                                <div id="@day" class="day col-sm p-2 border border-left-0 border-top-0 text-truncate">
+                                    <h5 class="row align-items-center">
+                                        <span class="date col-1">@day</span>
+                                        @{day++;}
+                                        <small class="col d-sm-none text-center">@thisDay.DayOfWeek</small>
+                                        <span class="col-1"></span>
+                                    </h5>
+                                    @foreach (var vent in ViewBag.JoinedEvent)
+                                    {
+                                        if (vent.Event.ScheduledAt.Date == thisDay.Date)
+                                        {
+                                            <p class="d-sm">@vent.Event.Title</p>
+                                        }
+                                    }
+                                    @foreach (var vent in ViewBag.Events)
+                                    {
+                                        if (vent.ScheduledAt.Date == thisDay.Date)
+                                        {
+                                            <p class="d-sm">@vent.Title</p>
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                int nextMonth = (DateTime.Now.Month % 12) + 1;
+                                DateTime thisDay = new DateTime(DateTime.Now.Year, nextMonth, nextmonth);
+                                <div class="nextmonth col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block">
+                                    <h5 class="row align-items-center">
+                                        <span class="date col-1">@nextmonth</span>
+                                        @{nextmonth++;}
+                                        <small class="col d-sm-none text-center text-muted">@thisDay.DayOfWeek</small>
+                                        <span class="col-1"></span>
+                                    </h5>
+                                    @foreach (var vent in ViewBag.JoinedEvent)
+                                    {
+                                        if (vent.Event.ScheduledAt.Date == thisDay.Date)
+                                        {
+                                            <p class="d-sm">@vent.Event.Title</p>
+                                        }
+                                    }
+                                    @foreach (var vent in ViewBag.Events)
+                                    {
+                                        if (vent.ScheduledAt.Date == thisDay.Date)
+                                        {
+                                            <p class="d-sm">@vent.Title</p>
+                                        }
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table mt-5" class="event-table">
+    <thead class="event-headers">
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Date and Time</th>
+            <th scope="col">Leave/Delete Event</th>
+            <th scope="col">Reminders</th>
+            <th scope="col">Host</th>
+            <th scope="col">Actions</th> <!-- Yeni sütun: Actions -->
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (ViewBag.Events != null)
+            {
+                foreach (Event vent in ViewBag.Events)
+                {
+                    if (vent.ScheduledAt > DateTime.Now)
+                    {
+                        <tr>
+                            <td><a href="event/@vent.EventId">@vent.Title</a></td>
+                            <td>@vent.ScheduledAt.ToString("MMM dd, yyyy h:mm tt")</td>
+                            <td><a href="@Url.Action("DeleteEvent", "Home", new { eventId = vent.EventId })">Delete</a></td>
+                            <td><a href="/reminder/@vent.EventId">Manage</a></td>
+                            <td>@vent.Creator.FirstName</td>
+                            <td><a href="@Url.Action("BirthdayCard", "Birthday", new { eventId = vent.EventId })" class="btn btn-primary">View Message Hub</a></td> <!-- Yeni baðlantý -->
+                        </tr>
+                    }
+                }
+            }
+            foreach (Link vent in ViewBag.JoinedEvent)
+            {
+                if (vent.Event.ScheduledAt > DateTime.Now)
+                {
+                    <tr>
+                        <td><a href="event/@vent.EventId">@vent.Event.Title</a></td>
+                        <td>@vent.Event.ScheduledAt.ToString("MMM dd, yyyy h:mm tt")</td>
+                        <td><a href="/event/leave/@vent.EventId">Leave</a></td>
+                        <td><a href="/reminder/@vent.EventId">Manage</a></td>
+                        <td>@vent.Event.Creator.FirstName</td>
+                        <td><a href="@Url.Action("BirthdayCard", "Birthday", new { eventId = vent.EventId })" class="btn btn-primary">View Birthday Card</a></td> <!-- Yeni baðlantý -->
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

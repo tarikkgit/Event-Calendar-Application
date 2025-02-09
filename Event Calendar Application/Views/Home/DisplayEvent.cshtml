@@ -1,0 +1,98 @@
+@model EventPlanner.Models.Invite
+@{
+    ViewData["Title"] = "Event Page";
+}
+
+@* ViewBag.CurrentUser *@
+@* ViewBag.CurrentEvent *@
+
+<h1 class="display-4 text-center">@ViewBag.CurrentEvent.Title</h1>
+<h3 class="text-center">@ViewBag.CurrentEvent.Description</h3>
+
+@if (ViewBag.CurrentUser.UserId == ViewBag.CurrentEvent.UserId)
+{
+    <a href="@Url.Action("EditEvent", "Home", new { eventId = ViewBag.CurrentEvent.EventId })" class="btn btn-primary">Edit Event</a>
+}
+
+<div class="container">
+    <h2>@ViewBag.CurrentEvent.Location</h2>
+    <h2>@ViewBag.CurrentEvent.ScheduledAt.ToString("MM/dd/yyyy hh:mm")</h2>
+    <div class="row">
+        @if (@ViewBag.CurrentUser.Address == null)
+        {
+            <div class="col-sm-12">
+                <iframe width="100%" height="450" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=@Keys.MapsKey
+                    &q=@ViewBag.CurrentEvent.Location">
+                </iframe>
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-12">
+                <iframe width="100%" height="450" frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed/v1/directions?origin=@ViewBag.CurrentUser.Address&destination=@ViewBag.CurrentEvent.Location&key=@Keys.MapsKey"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        }
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            @if (ViewBag.CurrentUser.UserId == ViewBag.CurrentEvent.UserId)
+            {
+                <h1>Invite Friends to the event:</h1>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Friend</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in @ViewBag.Friends)
+                        {
+                            @if (!@ViewBag.UsersAtEvent.Contains(user))
+                            {
+                                <tr>
+                                    <td>@user.FirstName</td>
+                                    <td><a href="/invite/@ViewBag.CurrentEvent.EventId/@user.UserId">Send invitation email</a></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+            else if (ViewBag.CurrentEvent.Guests.Contains(ViewBag.CheckLink))
+            {
+                <a href="leave/@ViewBag.CurrentEvent.EventId" class="btn btn-secondary text-center mt-2">Leave</a>
+            }
+            else
+            {
+                <a href="join/@ViewBag.CurrentEvent.EventId" class="btn btn-primary text-center mt-2">Join</a>
+            }
+        </div>
+        <div class="col">
+            @* list all the people that have joined *@
+            <h1>Confirmed Guests:</h1>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Guest Name</th>
+                    </tr>
+                </thead>
+                @foreach (var item in @ViewBag.UsersAtEvent)
+                {
+                    <tr>
+                        <td>@item.FirstName</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    @if (ViewBag.CurrentEvent.Title.Contains("Birthday") || ViewBag.CurrentEvent.Title.Contains("birthday"))
+    {
+        <a href="/birthdaycard/@ViewBag.CurrentEvent.EventId"><button class="btn btn-primary ml-2">View the Birthday Card!</button></a>
+    }
+</div>

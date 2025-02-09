@@ -1,0 +1,20 @@
+@model EventPlanner.Models.User
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>Profile</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Name: @Model.FirstName @Model.LastName</h4>
+            <h4>Email: @Model.Email</h4>
+            <h4>Address: @Model.Address</h4>
+            <h4>Profile Picture: <img src="@Model.ProfilePictureUrl" alt="Profile Picture" /></h4>
+            <h4>Points: @Model.Points</h4> <!-- Kullanýcý puanlarý -->
+            <h4>Achievements: @Model.Achievements</h4> <!-- Kullanýcý baþarýlarý -->
+        </div>
+    </div>
+</div>

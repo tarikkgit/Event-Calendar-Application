@@ -1,0 +1,42 @@
+@model EventPlanner.Models.User
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<h2>Edit Profile</h2>
+
+<form asp-action="UpdateProfile" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input class="form-control" asp-for="FirstName" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input class="form-control" asp-for="LastName" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input class="form-control" asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input class="form-control" asp-for="Address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ProfilePictureUrl"></label>
+        <input class="form-control" asp-for="ProfilePictureUrl" />
+        <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input class="form-control" asp-for="Password" type="password" placeholder="Leave blank to keep current password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Profile</button>
+</form>

@@ -1,0 +1,42 @@
+@model User
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="registration-group">
+    <h2>Registration</h2>
+    <form asp-action="Registration" asp-controller="Landing" method="POST">
+        <div class="input-icons">
+            <i class="fa fa-user icon"></i>
+            <input class="form-control" asp-for="FirstName" placeholder="First Name">
+            <span class="text-danger" asp-validation-for="FirstName"></span>
+        </div>
+        <div class="input-icons">
+            <i class="fa fa-user icon"></i>
+            <input class="form-control" asp-for="LastName" placeholder="Last Name">
+            <span class="text-danger" asp-validation-for="LastName"></span>
+        </div>
+        <div class='input-icons'>
+            <i class="fa fa-home icon"></i>
+            <input class="form-control" asp-for="Address" placeholder= "City, State">
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div> 
+        <div class="input-icons">
+            <i class="fa fa-envelope icon"></i>
+            <input class="form-control" asp-for="Email" placeholder="Email Address">
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+        <div class="input-icons">
+            <i class="fa fa-lock icon"></i>
+            <input class="form-control" asp-for="Password" placeholder="Password">
+            <span class="text-danger" asp-validation-for="Password"></span>
+        </div>
+        <div class="input-icons">
+            <i class="fa fa-lock icon"></i>
+            <i class="fa fa-check icon"></i>
+            <input class="form-control" asp-for="Confirm" placeholder="Confirm Password">
+            <span class="text-danger" asp-validation-for="Confirm"></span>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" type="submit">Register</button>
+    </form>
+</div>

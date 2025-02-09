@@ -1,0 +1,42 @@
+@model Event
+@{
+    ViewData["Title"] = "Set Reminders";
+}
+<div class="container">
+    <h1 class="display-4 text-center">Your Reminders</h1>
+    <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Event</th>
+            <th scope="col">Reminder Time</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in @ViewBag.Reminders)
+            {
+                <tr>
+                    <td>@item.Event.Title</td>
+                    <td>@item.TimeToSendReminder.ToString("MMM dd, yyyy h:mm tt")</td>
+                    <td><a href="/reminder/@item.ReminderId/delete" class="btn btn-danger">Delete Reminder</a></td>
+                </tr>
+            }
+    </tbody>
+</table>
+    <div class="container text-center">
+        <h1 class="display-4">Create a New Reminder</h1>
+        <button class="btn btn-secondary mr-2">Suggested Reminders:</button>
+        <a href="/reminder/@ViewBag.CurrentEvent.EventId/create/24" class="btn btn-primary">One Day Before</a>
+        <a href="/reminder/@ViewBag.CurrentEvent.EventId/create/1" class="btn btn-primary">One Hour Before</a>
+        <a href="/reminder/@ViewBag.CurrentEvent.EventId/create/10" class="btn btn-primary">Ten Minutes Before</a>
+        <div class="mt-4">
+            <form action="/reminder/@ViewBag.CurrentEvent.EventId/create" method="post">
+            <br>
+                <button class="btn btn-secondary m-3">Enter Custom Time Before Event</button>
+            <br>
+                    <input type="number" placeholder= "Enter Hours" name="timeBefore">
+                <button type="submit" class="btn btn-primary">Set Reminder</button>
+            </form>
+        </div>
+    </div>
+</div>
