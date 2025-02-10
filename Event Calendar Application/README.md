@@ -1,13 +1,4 @@
-**JQZ Event Planner** -- 
-**Start planning events with a few clicks**
 
-This app was built in C# using Asp.NET. With dotnet installed on your machine, Here's how you can get the app  up and running: 
-![event_planner](https://user-images.githubusercontent.com/24249474/114450168-8723e200-9b8a-11eb-82af-211a7706737e.gif)
-
-
-```
- git clone https://github.com/johnmalbert/EventPlanner.git
-```
 
 This app uses MySQL as a database. You can check whether it is installed on your machine by typing 
 
